@@ -1,0 +1,29 @@
+.statsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 1em;
+  height: 100%;
+  width: 100%;
+
+  .header {
+    display: flex;
+  }
+
+  .field {
+    display: flex;
+    background-color: #F1FFC3;
+    min-height: 10em;
+    min-width: 100%;
+  }
+
+
+  .buttons {
+    display: flex;
+  }
+
+  .radialMenuContainer {
+    display: flex;
+  }
+}
