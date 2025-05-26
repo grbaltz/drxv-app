@@ -1,0 +1,23 @@
+.fieldContainer {
+  display: flex;
+  flex-direction: row;
+  background-color: #F1FFC3;
+  border: 2px solid black;
+  width: 100vw;
+  height: 25vh;
+
+  .endzone {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 3em;
+  }
+
+  .center {
+    flex: 3;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+  }
+}
