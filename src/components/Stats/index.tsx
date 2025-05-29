@@ -1,4 +1,6 @@
 import Field from '@components/Field';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 import './Stats.scss';
 
@@ -17,6 +19,10 @@ const Stats = () => {
     },
   });
 
+  const TimeoutButton = styled(Button)({
+    backgroundColor: '#F1F1F1'
+  })
+
   return (
     <div className="statsContainer">
       <div className="header">
@@ -31,7 +37,10 @@ const Stats = () => {
         state={statsState}
         setState={setStatsState}
       />
-      <div className="buttons">Buttons</div>
+      <div className="buttons">
+        <TimeoutButton variant='outlined'>Timeouts</TimeoutButton>
+        <TimeoutButton variant='outlined'>Timeouts</TimeoutButton>
+      </div>
       <div className="radialMenuContainer">Cool Radial Menu</div>
     </div>
   );

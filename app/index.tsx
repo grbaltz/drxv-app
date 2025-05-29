@@ -3,6 +3,6 @@ import './styles.scss';
 
 export default function Index() {
   return (
-    <Stats/>
+    <Stats />
   );
 }

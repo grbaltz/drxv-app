@@ -13,6 +13,14 @@
     justify-content: center;
     color: black;
     font-size: 3em;
+
+    &.hero {
+      background-color: rgb(123, 228, 123);
+    }
+
+    &.opponent {
+      background-color: rgb(226, 108, 99);
+    }
   }
 
   .center {

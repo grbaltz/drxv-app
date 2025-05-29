@@ -5,11 +5,11 @@ const Field = ({state, setState}) => {
   
   return (
     <div className="fieldContainer">
-      <div className="endzone">
+      <div className="endzone hero">
         {state?.score?.hero}
       </div>
       <div className="center"></div>
-      <div className="endzone">
+      <div className="endzone opponent">
         {state?.score?.opponent}
       </div>
     </div>
