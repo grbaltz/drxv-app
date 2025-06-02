@@ -1,0 +1,23 @@
+.radial-menu-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .frisbee {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    bottom: 20px;
+    cursor: grab;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+  }
+
+  // .hidden {
+  //   // opacity: 0;
+  //   background-color: red !important;
+  //   pointer-events: none;
+  // }
+}

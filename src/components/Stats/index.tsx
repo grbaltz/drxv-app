@@ -1,4 +1,5 @@
-import Field from '@components/Field';
+import Field from '#components/Field';
+import RadialMenu from '#components/RadialMenu';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
@@ -41,7 +42,7 @@ const Stats = () => {
         <TimeoutButton variant='outlined'>Timeouts</TimeoutButton>
         <TimeoutButton variant='outlined'>Timeouts</TimeoutButton>
       </div>
-      <div className="radialMenuContainer">Cool Radial Menu</div>
+      <RadialMenu />
     </div>
   );
 }
