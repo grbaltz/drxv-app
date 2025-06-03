@@ -3,11 +3,20 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "#/*": ["*"],
-      "#components/*": ["components/*"],
-      "#images/*": ["images/*"],
+      "#/*": [
+        "*"
+      ],
+      "#components/*": [
+        "components/*"
+      ],
+      "#images/*": [
+        "images/*"
+      ]
     },
-    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
     "types": []
   },
   "include": [
@@ -16,5 +25,7 @@
     "src/**/*.tsx",
     "src/**/*.d.ts",
     "src/custom.d.ts",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
   ]
 }

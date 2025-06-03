@@ -1,23 +1,49 @@
+$frisbee-size: 64px;
+
 .radial-menu-container {
+  position: relative; // ✅ fix
+  height: 50vh;
+  width: 100%;
+  background: radial-gradient(ellipse at bottom, #333 0%, #111 100%);
+  overflow: hidden;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
 
-  .frisbee {
-    width: 60px;
-    height: 60px;
+  .pie-slice {
     position: absolute;
-    bottom: 20px;
-    cursor: grab;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 120px;
+    height: 120px;
+    background-color: rgba(0, 255, 0, 0.3);
+    transform-origin: bottom center;
+    border-radius: 50% 50% 0 0;
 
+    &.hovered {
+      background-color: rgba(255, 0, 0, 0.5);
+    }
   }
 
-  // .hidden {
-  //   // opacity: 0;
-  //   background-color: red !important;
-  //   pointer-events: none;
-  // }
+  @for $i from 0 through 5 {
+    .slice-#{$i} {
+      transform: rotate(#{$i * 180 / 6}deg)
+        translateY(-50%)
+        rotate(-#{$i * 180 / 6}deg);
+    }
+  }
+
+  .frisbee {
+    width: $frisbee-size;
+    height: $frisbee-size;
+    position: absolute;
+    bottom: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: grab;
+    z-index: 10;
+  }
+
+  .hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }

@@ -1,6 +1,5 @@
 import frisbee from '#images/frisbee.png';
 import { useState } from 'react';
-import './RadialMenu.scss';
 
 export const RadialMenu = ({ slices = 6 }: { slices?: number}) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -9,11 +8,10 @@ export const RadialMenu = ({ slices = 6 }: { slices?: number}) => {
   
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     setIsDragging(true)
-    console.log('***yup', );
 
-    // const img = new Image()
-    // img.src = ''
-    // e.dataTransfer.setDragImage(img, 0, 0)
+    const img = new Image()
+    img.src = ''
+    e.dataTransfer.setDragImage(img, 0, 0)
   }
 
   const handleDragEnd = () => {
@@ -30,21 +28,28 @@ export const RadialMenu = ({ slices = 6 }: { slices?: number}) => {
 
   return (
     <div className='radial-menu-container'>
-      {/* <div>{slices}</div> */}
+      {[...Array(slices)].map((_, index) => (
+        <div
+          key={index}
+          className={`pie-slice slice-${index}}
+            ${hoveredSlice === index ? 'hovered' : ''
+          }`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setHoveredSlice(index);
+          }}
+          onDragLeave={() => setHoveredSlice(null)}
+          onDrop={handleDrop}
+        />
+      ))}
       <img 
         src={frisbee.uri}
         alt='frisbee'
-        // className={`frisbee ${isDragging ? 'hidden' : ''}`}
-        // draggable
-        // onDragStart={() => setIsDragging(true)}
-        // onDragEnd={handleDragEnd}
+        className={`frisbee ${isDragging ? 'hidden' : ''}`}
+        draggable
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
       />
-      {/* <Image 
-        source={{ uri: frisbee.uri }} 
-        style={{ width: 100, height: 100 }}
-        
-      /> */}
-
     </div>
   )
 };
