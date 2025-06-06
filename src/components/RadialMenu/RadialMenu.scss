@@ -1,10 +1,10 @@
 @use "sass:math";
 
 $frisbee-size: 64px;
-$menu-radius: 120px;
+$slice-size: 100px;
 
 .radial-menu-container {
-  position: relative;
+  position: relative; // ✅ fix
   height: 50vh;
   width: 100%;
   overflow: hidden;
@@ -12,56 +12,28 @@ $menu-radius: 120px;
   justify-content: center;
   align-items: flex-end;
 
-  .semicircle-container {
+  .pie-slice {
     position: absolute;
+    width: $slice-size;
+    height: $slice-size;
+    border-radius: 50% 50% 0 0;
+    background-color: rgb(15, 185, 228);
+    transform-origin: bottom center;
     bottom: 80px;
     left: 50%;
-    transform: translateX(-50%);
-    width: $menu-radius * 2.5; // Increased width to prevent clipping
-    height: $menu-radius * 1.2; // Increased height slightly
+    margin-left: -1 * math.div($slice-size, 2);
     z-index: 1;
-    overflow: visible; // Allow content to extend beyond container
-  }
 
-  .pie-slice-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: all;
-    background-color: rgba(15, 185, 228, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &.hovered {
-      background-color: rgba(255, 100, 100, 0.9);
-      border-color: rgba(255, 100, 100, 1);
-      transform: scale(1.02);
+      background-color: rgba(255, 0, 0, 0.747);
     }
 
     &.selected {
-      background-color: rgba(255, 215, 0, 0.9);
-      border-color: rgba(255, 215, 0, 1);
-    }
-  }
-
-  .pie-slice-svg {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-
-  .pie-slice {
-    fill: rgba(15, 185, 228, 0.8);
-    stroke: rgba(255, 255, 255, 0.3);
-    stroke-width: 1;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    transform-origin: center;
-
-    &:hover {
-      fill: rgba(15, 185, 228, 0.9);
+      background-color: yellow;
     }
   }
 
@@ -74,12 +46,6 @@ $menu-radius: 120px;
     object-fit: cover;
     cursor: grab;
     z-index: 10;
-    transition: opacity 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-
-    &:active {
-      cursor: grabbing;
-    }
   }
 
   .hidden {
