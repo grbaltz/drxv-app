@@ -38,15 +38,15 @@ $slice-width: 8rem;
   margin-left: -1 * math.div($slice-width, 2); 
   transform-origin: bottom;
   transition: all 0.2s ease;
-  cursor: pointer;
+  // cursor: pointer;
   background-color: #d1d5db;
   // border: 2px solid white;
-  border-radius: 50% 50% 0 0;
+  // border-radius: 50% 50% 0 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   padding-bottom: 1rem;
-  clip-path: polygon(40% 100%, 60% 100%, 90% 0%, 10% 0%);
+  // clip-path: polygon(40% 100%, 60% 100%, 90% 0%, 10% 0%);
 
   &:hover {
     background-color: #9ca3af;
@@ -73,19 +73,21 @@ $slice-width: 8rem;
 // Frisbee container
 .frisbee-container {
   position: absolute;
-  width: 8rem;
-  height: 8rem;
-  left: 50%;
-  top: 50%;
-  margin-left: -4rem;
-  margin-top: -4rem;
-  cursor: move;
+  width: 5rem;
+  height: 5rem;
+  // left: 50%;
+  // top: 70%;
+  // margin-left: -4rem;
+  // margin-top: -4rem;
+  cursor: pointer;
   user-select: none;
   transition: opacity 0.2s ease;
   opacity: 1;
   z-index: 10;
+  // border: 1px solid black;
 
   &.dragging {
+    cursor: none;
     opacity: 0.7;
     z-index: 50;
   }
@@ -148,23 +150,19 @@ $slice-width: 8rem;
   transform: translateY(2px);
 }
 
-// Instructions
-.instructions {
-  position: absolute;
-  bottom: 2rem;
-  left: 2rem;
-  color: #4b5563;
-  max-width: 24rem;
-}
-
-.instructions-text {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
 .selected-slice {
   margin-top: 0.5rem;
   font-size: 0.875rem;
   font-weight: bold;
   color: #059669;
+}
+
+.radial-menu-svg {
+  display: block;
+  // background: radial-gradient(ellipse at bottom, #222, #000);
+}
+
+.pie-slice {
+  // cursor: pointer;
+  transition: fill 0.2s ease;
 }
