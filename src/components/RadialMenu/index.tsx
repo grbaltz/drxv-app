@@ -1,5 +1,7 @@
+import { Stack } from '#utils';
 import React, { useEffect, useRef, useState } from "react";
 import "./RadialMenu.scss";
+
 
 interface Position {
   x: number;
@@ -11,22 +13,42 @@ interface DragRef {
   startY: number;
 }
 
+interface StatsState {
+  hero: string;
+  opponent: string;
+  gameNum: number;
+  score: Record<string, number>;
+  timeouts: Record<string, number>;
+  roster: Stack<Record<string, number>>;
+}
+
 interface RadialMenuProps {
+  state: StatsState;
+  setState: React.Dispatch<React.SetStateAction<StatsState>>;
   slices?: number;
 }
 
+const FRISBEE_X = 0;
+const FRISBEE_Y = -20;
 const RADIUS = 150;
 const CENTER = { x: 200, y: 200 };
 const HOVER_RADIUS = 20;
 
-export const RadialMenu: React.FC<RadialMenuProps> = ({ slices = 6 }) => {
+export const RadialMenu: React.FC<RadialMenuProps> = ({
+  state,
+  setState,
+  slices = 7,
+}) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [hoveredSlice, setHoveredSlice] = useState<number | null>(null);
   const [selectedSlice, setSelectedSlice] = useState<number | null>(null);
-  const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
+  const [position, setPosition] = useState<Position>({
+    x: FRISBEE_X,
+    y: FRISBEE_Y,
+  });
   const dragRef = useRef<DragRef>({ startX: 0, startY: 0 });
   const frisbeeRef = useRef<HTMLDivElement>(null);
-  const [players, setPlayers] = useState<Array<string> | []>([
+  const [players, setPlayers] = useState<Array<string>>([
     "Whiteneck",
     "Bonus",
     "Gator",
@@ -35,9 +57,25 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ slices = 6 }) => {
     "Erica",
     "Annie",
   ]);
+  const [currentHandler, setCurrentHandler] = useState("");
+
+  // test includes custom
+  const handleCatch = (player: string) => {
+    const ros = state?.roster;
+    ros.push({ [player]: 1 });
+    console.log('***ros', ros);
+    setState(prev => ({
+      ...prev,
+      roster: ros,
+    }))
+  };
 
   // new
   const svgRef = useRef<SVGSVGElement>(null);
+
+  const resetFrisbeePos = () => {
+    setPosition({ x: FRISBEE_X, y: FRISBEE_Y });
+  };
 
   const polarToCartesian = (
     cx: number,
@@ -123,7 +161,7 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ slices = 6 }) => {
         hoveredIndex[a] > hoveredIndex[b] ? a : b
       );
       const i = hoveredIndex[mostHovered] >= 7 ? mostHovered : null;
-      console.log('***i', i);
+      console.log("***i", i);
       setHoveredSlice(!i ? null : Number(i));
     } else {
       setHoveredSlice(null);
@@ -144,7 +182,9 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ slices = 6 }) => {
     return (
       <path
         key={index}
-        className="pie-slice"
+        className={`pie-slice ${index === selectedSlice ? "selected" : ""} ${
+          index === hoveredSlice ? "hovered" : ""
+        }`}
         data-index={index}
         d={path}
         fill={hoveredSlice === index ? "#f00" : "#0af"}
@@ -196,24 +236,14 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ slices = 6 }) => {
     e.preventDefault();
   };
 
+  // select player
   const handleMouseUp = () => {
-    // swap the names and attribute a catch
-    if (isDragging && hoveredSlice !== null) {
-      const lastPlayer = players[players.length - 1];
-      const swapPlayer = players[hoveredSlice];
-
-      const newPlayers = players.map((player, index) => {
-        if (index === hoveredSlice) return lastPlayer;
-        if (index === (players.length - 1)) return swapPlayer;
-        return player;
-      })
-
-      setPlayers(newPlayers);
-    }
-    
     setIsDragging(false);
+    setCurrentHandler(players[hoveredSlice] || "");
+    handleCatch(players[hoveredSlice]);
+    setSelectedSlice(hoveredSlice);
     setHoveredSlice(null);
-    setPosition({ x: 0, y: 0 });
+    resetFrisbeePos();
   };
 
   React.useEffect(() => {
@@ -228,13 +258,27 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ slices = 6 }) => {
     }
   }, [isDragging, position]);
 
+  const frisbeeDivs = (
+    <>
+      <div className="frisbee-disc">
+        <div className="frisbee-ring-outer"></div>
+        <div className="frisbee-ring-inner"></div>
+
+        <div className="frisbee-text-container">
+          <span className="frisbee-text">{currentHandler}</span>
+        </div>
+      </div>
+      <div className="frisbee-shadow"></div>
+    </>
+  );
+
   return (
     <div className="radial-menu-container">
       <svg
         ref={svgRef}
         width="100%"
         height="400px" // previously 50vh
-        viewBox="0 0 400 400"
+        viewBox="225 0 200 400"
         className="radial-menu-svg"
         style={{ transform: "rotate(-90deg)" }}
       >
@@ -249,17 +293,9 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ slices = 6 }) => {
         }}
         onMouseDown={handleMouseDown}
       >
-        <div className="frisbee-disc">
-          <div className="frisbee-ring-outer"></div>
-          <div className="frisbee-ring-inner"></div>
-
-          <div className="frisbee-text-container">
-            <span className="frisbee-text">{players[players?.length - 1]}</span>
-          </div>
-        </div>
-
-        <div className="frisbee-shadow"></div>
+        {frisbeeDivs}
       </div>
+      <div className="goal-container">GOAL</div>
     </div>
   );
 };
